@@ -1,0 +1,338 @@
+@import "~normalize-css/normalize.css";
+@import "./fonts.css";
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,500;0,700;0,900;1,400&display=swap");
+
+$maxWidth: 2100;
+@mixin adaptiv-font($pcSize, $mobSize) {
+  $addSize: $pcSize - $mobSize;
+  $maxWidth: $maxWidth - 320;
+  font-size: calc(
+    #{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth})
+  );
+}
+* {
+  box-sizing: border-box;
+  font-size: 14px;
+}
+body {
+  font-family: "Conv_Montserrat";
+  font-size: 1rem;
+}
+.app {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: url("../assets/bodybg.png") center no-repeat;
+  background-size: cover;
+}
+
+.container {
+  //контейнер для 3d пространства
+  position: relative;
+  width: 80%;
+  &::before {
+    content: "";
+    display: block;
+    padding-top: 57.7%;
+  }
+
+  perspective: 1000000px;
+}
+
+.cube {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform-style: preserve-3d;
+  transition: all 1.5s ease;
+  //transform: rotate3d(0, 1, 0, 180deg);
+}
+//общий класс для сторон============================
+.side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  overflow: hidden;
+
+  //ограничивающий контейнер
+  .content {
+    width: 95%;
+    height: 95%;
+
+    .nav {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      .logo {
+        @include adaptiv-font(40, 14);
+        cursor: pointer;
+        font-weight: 900;
+      }
+      ul {
+        display: flex;
+        list-style: none;
+        justify-content: space-between;
+        li {
+          @include adaptiv-font(22, 14);
+          padding: 0.3rem 1rem;
+          cursor: pointer;
+
+          &.select {
+            color: white;
+            background-color: black;
+            border-radius: 50px;
+          }
+        }
+      }
+    }
+  }
+
+  //=====================Home===========================
+  &.front {
+    transform: translateZ(40vw);
+    background: url("../assets/4678.jpg") no-repeat center center;
+    background-size: cover;
+    & .home_text {
+      @include adaptiv-font(25, 14);
+      position: absolute;
+      left: 2vw;
+      bottom: 1vh;
+      color: orange;
+    }
+    .btn {
+      @include adaptiv-font(20, 12);
+      text-transform: uppercase;
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #000;
+      color: white;
+      border: 0;
+      padding: 0.5em 2.5em;
+      border-radius: 20px;
+      box-shadow: 0px 34px 32px 0px rgba(0, 0, 0, 0.75);
+      z-index: 1000;
+      &:hover {
+        color: orange;
+      }
+    }
+  }
+  //==================WORK===video=====================
+  &.back {
+    transform: rotateY(180deg) translateZ(40vw);
+    color: white;
+    .present_text {
+      position: relative;
+      z-index: 20;
+      perspective: 0px;
+      & h1 {
+        @include adaptiv-font(80, 18);
+        color: orange;
+        transition: all 2s ease 3s;
+        transform: rotateX(90deg) skewX(30deg); 
+        transform-origin: bottom center;
+        &.active {
+          transform:rotateX(0deg) skewX(0deg);
+        }
+      }
+      & p {
+        font-family: Jost;
+        @include adaptiv-font(40, 14);
+        transition: all 1.5s linear 5s;
+        opacity: 0;
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+    .opacity_block {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(14, 13, 13, 0.219);
+      z-index: 10;
+    }
+
+    & video {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: fill;
+    }
+  }
+
+  //===========================About===маяк============
+  &.right {
+    transform: rotateY(90deg) translateZ(40vw);
+    color: #fff;
+
+    &:hover:before {
+      filter: blur(3px);
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url(../assets/wallpaperbetter.jpg) no-repeat center center;
+      background-size: cover;
+    }
+    & .title {
+      overflow-y: auto;
+      padding: 10px;
+      text-align: left;
+      direction: rtl;
+      position: relative;
+      width: 50%;
+      height: 50%;
+      z-index: 10;
+
+      &::-webkit-scrollbar {
+        width: 3px;
+        background-color: #f5f5f5;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.863);
+      }
+
+      & h1 {
+        @include adaptiv-font(50, 14);
+        color: orange;
+        text-transform: uppercase;
+      }
+      & p {
+        @include adaptiv-font(14, 12);
+      }
+    }
+  }
+  //=================Contact=================
+  &.left {
+    transform: rotateY(-90deg) translateZ(40vw);
+    color: #fff;
+    & .content .nav ul li.select {
+      background-color: orange;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: url("../assets/4525.jpg") top center no-repeat;
+      background-size: cover;
+    }
+    & .contact_form {
+      position: absolute;
+      top: 55%;
+      left: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 1%;
+      border-radius: 5px;
+      -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.75);
+      -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.75);
+      box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.75);
+      transform: translate3d(-110%, -50%, 0);
+      width: 35%;
+      height: 80%;
+      background-color: rgba(255, 255, 255, 0.871);
+
+      & p {
+        margin: 0;
+        font-family: "Jost";
+        font-weight: 500;
+        @include adaptiv-font(50, 14);
+        color: rgb(56, 48, 48);
+      }
+      & form {
+        width: 100%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        & input {
+          width: 100%;
+          height: 30%;
+          padding: 8px;
+          border-radius: 5px;
+          background-color: rgba(255, 255, 255, 1);
+          border: 1px solid #000;
+          margin: 0 0 1vh 0;
+
+          &::placeholder {
+            font-family: "Conv_Montserrat";
+            color: rgb(138, 137, 137);
+            padding-left: 1%;
+            @include adaptiv-font(18, 14);
+          }
+        }
+      }
+      & .btn-form {
+        text-transform: uppercase;
+        border: 0;
+        height: 10%;
+        width: 60%;
+        background-color: orange;
+        border-radius: 4px;
+        padding: 4px 0;
+        @include adaptiv-font(20, 14);
+        &:hover {
+          color: #fff;
+        }
+      }
+      & .socialIcon {
+        width: 100%;
+        height: 3vw;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+
+        & .cocialIcon_item {
+          position: relative;
+          width: 10%;
+          margin: 0 2.5%;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding-top: 100%;
+          }
+
+          &.facebook::before {
+            background: url(../assets/facebook.png) center center no-repeat;
+            background-size: contain;
+          }
+          &.twitter::before {
+            background: url(../assets/instagram2.png) center center no-repeat;
+            background-size: cover;
+          }
+          &.instagram::before {
+            background: url(../assets/twitter2.png) center center no-repeat;
+            background-size: cover;
+          }
+        }
+      }
+    }
+  }
+}
