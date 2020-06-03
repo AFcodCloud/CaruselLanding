@@ -38,8 +38,12 @@ body {
     display: block;
     padding-top: 57.7%;
   }
-
   perspective: 1000000px;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .cube {
@@ -48,6 +52,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+  will-change: transform, transition;
   transform-style: preserve-3d;
   transition: all 1.5s ease;
   //transform: rotate3d(0, 1, 0, 180deg);
@@ -68,8 +73,55 @@ body {
   .content {
     width: 95%;
     height: 95%;
+    .burger {
+      display: none;
+    }
+    @media (max-width: 800px) {
+      //////////////////////media burger=============================================
+      .burger {
+        display: block;
+        position: absolute;
+        top: 4%;
+        right: 4%;
+        width: 50px;
+        height: 3px;
+        z-index: 500;
+        background: #fff;
 
+        &::before {
+          content: "";
+          width: 100%;
+          height: 3px;
+          background-color: #fff;
+          position: absolute;
+          top: 10px;
+          transition: 0.3s all ease;
+        }
+        &::after {
+          content: "";
+          width: 100%;
+          height: 3px;
+          background-color: #fff;
+          position: absolute;
+          bottom: 10px;
+          transition: 0.3s all ease;
+        }
+        &.active {
+          top: 5%;
+          background: transparent;
+          &::before {
+            top: 0px;
+            transform: rotateZ(45deg);
+          }
+          &::after {
+            transform: rotateZ(-45deg);
+            bottom: 0px;
+          }
+        }
+      }
+    }
     .nav {
+      //////////////////////////////////////////====================nav===============================
       position: relative;
       display: flex;
       justify-content: space-between;
@@ -96,7 +148,63 @@ body {
           }
         }
       }
-    }
+      @media (max-width: 800px) {
+        ///////////////////media-nav========================================
+        top: -100%;
+        transition: 0.3s top ease;
+        //nav
+        height: 100%;
+        //плашка
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 95%;
+          background-color: rgba(46, 139, 86, 0.986);
+          z-index: 200;
+        }
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 100;
+
+        ul {
+          margin-top: 100%;
+          height: 40%;
+          padding: 0;
+          flex-direction: column;
+          justify-content: space-between;
+
+          li {
+            text-align: center;
+            z-index: 200;
+            @include adaptiv-font(45, 18);
+            padding: 1rem 1rem;
+
+            &.select {
+              color: white;
+              background-color: black;
+              border-radius: 50px;
+            }
+          }
+        }
+        &.active {
+          top: 0;
+        }
+      @media (orientation: landscape) {
+        top:-100%;
+        justify-content: start;
+        ul {
+          margin-top: 15%;
+          flex-direction: row;
+         
+        }
+      }
+      } //media-end
+      
+    } //nav-end
   }
 
   //=====================Home===========================
@@ -112,7 +220,7 @@ body {
       color: orange;
     }
     .btn {
-      @include adaptiv-font(20, 12);
+      @include adaptiv-font(20, 14);
       text-transform: uppercase;
       position: absolute;
       top: 80%;
@@ -124,7 +232,7 @@ body {
       padding: 0.5em 2.5em;
       border-radius: 20px;
       box-shadow: 0px 34px 32px 0px rgba(0, 0, 0, 0.75);
-      z-index: 1000;
+      z-index: 50;
       &:hover {
         color: orange;
       }
@@ -135,17 +243,30 @@ body {
     transform: rotateY(180deg) translateZ(40vw);
     color: white;
     .present_text {
+      height: 90%;
+      padding: 10px 10px ;
+      overflow-y: auto;
+      overflow-x: hidden;
+      text-align: left; 
       position: relative;
       z-index: 20;
-      perspective: 0px;
+
+      &::-webkit-scrollbar {
+        width: 2px;
+        background-color: #ccc;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.411);
+      }
       & h1 {
+        
         @include adaptiv-font(80, 18);
         color: orange;
         transition: all 2s ease 3s;
-        transform: rotateX(90deg) skewX(30deg); 
+        transform: rotateX(90deg) skewX(30deg);
         transform-origin: bottom center;
         &.active {
-          transform:rotateX(0deg) skewX(0deg);
+          transform: rotateX(0deg) skewX(0deg);
         }
       }
       & p {
@@ -176,9 +297,46 @@ body {
       left: 0;
       object-fit: fill;
     }
+    @media (max-width: 800px) {
+      /////////////////=================media-back video====================================================================
+      color: white;
+      .present_text {
+        height: 90%;
+        top:-95%;
+        perspective: none;
+
+        & h1 {
+          transition: none;
+          transform: none;
+          &.active {
+            transform: none;
+          }
+        }
+        & p {
+          transition: none;
+          opacity: 1;
+          &.active {
+            opacity:1;
+          }
+        }
+      }
+      .opacity_block {
+        background: url(../assets/work_mobile.jpg) center center no-repeat ;
+        background-size: cover;
+        &::before{
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.418);
+        }
+      }
+    }
   }
 
-  //===========================About===маяк============
+  //===========================About===маяк================================================================
   &.right {
     transform: rotateY(90deg) translateZ(40vw);
     color: #fff;
@@ -200,7 +358,7 @@ body {
       text-align: left;
       direction: rtl;
       position: relative;
-      width: 50%;
+      width: 60%;
       height: 50%;
       z-index: 10;
 
@@ -218,11 +376,28 @@ body {
         text-transform: uppercase;
       }
       & p {
-        @include adaptiv-font(14, 12);
+        @include adaptiv-font(30, 14);
+      }
+    }
+    @media (max-width: 800px) {
+      ////////////////////===============================================media lightHouse===========================
+      & .title {
+        top: -95%;
+        width: 100%;
+        height: 95%;
+        z-index: 10;
+
+        & h1 {
+          margin-top: 50px;
+          @include adaptiv-font(50, 18);
+        }
+        & p {
+          @include adaptiv-font(14, 14);
+        }
       }
     }
   }
-  //=================Contact=================
+  //==========================================================================Contact=================
   &.left {
     transform: rotateY(-90deg) translateZ(40vw);
     color: #fff;
@@ -334,5 +509,38 @@ body {
         }
       }
     }
+    @media (max-width: 800px) {////====================================media-Contact===========================
+      color: #fff;
+      & .content .nav ul li.select {
+        background-color: #000;
+      }
+      &::before {
+        background: url("../assets/4525.jpg")center left no-repeat;
+        background-size: cover;
+      }
+      & .contact_form {
+        transform: translateX(-102.5%) translateY(-50%);
+        width: 95%;
+        height: 90%;
+  
+        & p {
+          @include adaptiv-font(50, 30);
+          color: rgb(56, 48, 48);
+        }
+        & form {
+          width: 100%;
+          height: 30%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        & .socialIcon {
+          width: 100%;
+          height: 5vw;
+          display: flex;
+        }
+      }
+    }///////////==============================================================media contact ===============
   }
 }

@@ -11,17 +11,21 @@ for(let i=0;i<menuEl.length;i++){
 }
    
     const getActivClass = ()=>{
-       let text =  document.querySelector('.present_text')
-       text.childNodes[1].classList.add('active')
-       text.childNodes[3].classList.add('active')
+       let text =  document.querySelectorAll('.present_text>*')
+       for(let i=0; i<text.length; i++){
+        text[i].classList.add('active')
+       }  
     }
 
 let cube=document.querySelector('.cube')
 let deg=0;
 
-   
-const selectMenu = (e)=>{
+ 
 
+
+//переход по меню
+const selectMenu = (e)=>{
+    ToggleBurger()
     if(e.target.id==='home'){
         deg=0;
         cube.style.transform=`rotateY(${deg}deg)`
@@ -40,7 +44,7 @@ const selectMenu = (e)=>{
 
 
     
-
+//слайдер
 cube.onmousedown = function(event) {
 
     let startX = event.clientX;
@@ -79,3 +83,29 @@ cube.onmousedown = function(event) {
     };
   
   };
+ 
+  const ToggleBurger = ()=>{
+     let nav = document.querySelectorAll('.nav');
+     let burger = document.querySelectorAll('.burger')
+     for(let i=0; i<nav.length; i++){
+     nav[i].classList.toggle('active')
+     burger[i].classList.toggle('active')}
+  }
+const burger = document.querySelectorAll('.burger')
+for(let i=0;i<burger.length;i++){
+    burger[i].addEventListener('click', ToggleBurger)
+}
+
+    (window.onload = function(){
+        if(window.innerWidth >= 801){
+        document.querySelector('.video_container').innerHTML = '<video src="./video.mp4" autoplay="" muted="" loop=""></video>'
+        }
+    })()
+
+    window.addEventListener("orientationchange", function() {
+       this.setTimeout(()=>{
+           if(window.innerWidth >= 801){
+            document.querySelector('.video_container').innerHTML = '<video src="./video.mp4" autoplay="" muted="" loop=""></video>'
+            }
+       },0) 
+    }, true);
