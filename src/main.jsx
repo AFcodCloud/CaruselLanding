@@ -2,6 +2,16 @@ import './styles/fonts.css'
 import './styles/style.scss'
 import './assets/video.mp4'
 
+import {render} from 'react-dom'
+import React from 'react'
+import {App} from './components/App.jsx'
+
+render(<App/>, document.getElementById('app'))
+
+
+
+
+
 
 
 let menuEl = document.querySelectorAll('li');

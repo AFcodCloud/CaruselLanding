@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsWebpackPlulin = require("optimize-css-assets-webpack-plugin");
 const TerserWebpackPlugin = require("terser-webpack-plugin");
 
+
 const isDev = process.env.NODE_ENV === "development";
 
 const filename = (ext) => (isDev ? `[name].${ext}` : `[name].[hash].${ext}`);
@@ -29,7 +30,7 @@ module.exports = {
   context: path.resolve(__dirname, "src"),
   mode: "development",
   entry: {
-    main: ["@babel/polyfill", "./main.js"],
+    main: ["@babel/polyfill", "./main.jsx"],
   },
   output: {
     filename: filename("js"),
@@ -114,6 +115,17 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.jsx$/,
+        exclude:/node_modules/,
+        loader:{
+          loader:"babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/plugin-proposal-class-properties"],
+          }
+        }
+      }
     ],
   },
 };
