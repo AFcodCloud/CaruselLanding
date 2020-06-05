@@ -52,10 +52,9 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  will-change: transform, transition;
+  will-change: transform-style, transform, transition;
   transform-style: preserve-3d;
   transition: all 1.5s ease;
-  //transform: rotate3d(0, 1, 0, 180deg);
 }
 //общий класс для сторон============================
 .side {
@@ -95,6 +94,7 @@ body {
           background-color: #fff;
           position: absolute;
           top: 10px;
+          will-change: transition;
           transition: 0.3s all ease;
         }
         &::after {
@@ -104,6 +104,7 @@ body {
           background-color: #fff;
           position: absolute;
           bottom: 10px;
+          will-change: transition;
           transition: 0.3s all ease;
         }
         &.active {
@@ -111,9 +112,11 @@ body {
           background: transparent;
           &::before {
             top: 0px;
+            will-change: transform;
             transform: rotateZ(45deg);
           }
           &::after {
+            will-change: transform;
             transform: rotateZ(-45deg);
             bottom: 0px;
           }
@@ -150,6 +153,7 @@ body {
       }
       @media (max-width: 800px) {
         ///////////////////media-nav========================================
+        will-change: top, transition;
         top: -100%;
         transition: 0.3s top ease;
         //nav
@@ -194,6 +198,7 @@ body {
           top: 0;
         }
       @media (orientation: landscape) {
+        will-change: top;
         top:-100%;
         justify-content: start;
         ul {
@@ -236,6 +241,9 @@ body {
       &:hover {
         color: orange;
       }
+    }
+    @media (max-width: 800px) {
+      transform: translateZ(50vw);
     }
   }
   //==================WORK===video=====================
@@ -299,6 +307,7 @@ body {
     }
     @media (max-width: 800px) {
       /////////////////=================media-back video====================================================================
+      transform: rotateY(180deg) translateZ(50vw);
       color: white;
       .present_text {
         height: 90%;
@@ -381,6 +390,7 @@ body {
     }
     @media (max-width: 800px) {
       ////////////////////===============================================media lightHouse===========================
+      transform: rotateY(90deg) translateZ(50vw);
       & .title {
         top: -95%;
         width: 100%;
@@ -510,6 +520,8 @@ body {
       }
     }
     @media (max-width: 800px) {////====================================media-Contact===========================
+      will-change: transform;
+      transform: rotateY(-90deg) translateZ(50vw);
       color: #fff;
       & .content .nav ul li.select {
         background-color: #000;
@@ -519,6 +531,7 @@ body {
         background-size: cover;
       }
       & .contact_form {
+        will-change: transform;
         transform: translateX(-102.5%) translateY(-50%);
         width: 95%;
         height: 90%;
